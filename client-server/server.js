@@ -10,17 +10,26 @@ const server = http.createServer((req, resp) => {
   switch (req.url) {
     case "/":
       path += "index.html";
+      resp.statusCode = 200;
       break;
     case "/about":
       path += "about.html";
+      resp.statusCode = 200;
+      break;
+    case "/about-me":
+      resp.statusCode = 301;
+      resp.setHeader("Location", "/about");
+      resp.end();
       break;
     default:
+      resp.statusCode = 404;
       path += "error.html";
   }
 
   fs.readFile(path, (err, data) => {
     if (err) {
       console.log(err);
+      resp.statusCode = 404;
       resp.end("<h1>404: Not found!</h1>");
       return;
     }
