@@ -1,7 +1,7 @@
-import http from "http";
-import fs from "fs";
+import { createServer } from "http";
+import { readFile } from "fs";
 
-const server = http.createServer((req, resp) => {
+const server = createServer((req, resp) => {
   console.log(req.url, req.method, req.statusCode);
 
   resp.setHeader("Content-Type", "text/html"); // Response header
@@ -26,7 +26,7 @@ const server = http.createServer((req, resp) => {
       path += "error.html";
   }
 
-  fs.readFile(path, (err, data) => {
+  readFile(path, (err, data) => {
     if (err) {
       console.log(err);
       resp.statusCode = 404;
